@@ -423,9 +423,10 @@ class DrawTubeLogic(object):
     # Get color of edited segment
     segmentationNode = self.scriptedEffect.parameterSetNode().GetSegmentationNode()
     segmentID = self.scriptedEffect.parameterSetNode().GetSelectedSegmentID()
-    r, g, b = segmentationNode.GetSegmentation().GetSegment(segmentID).GetColor()
+    if segmentID:
+      r, g, b = segmentationNode.GetSegmentation().GetSegment(segmentID).GetColor()
+      modelDisplayNode.SetColor(r, g, b)  # Edited segment color
 
-    modelDisplayNode.SetColor(r, g, b)  # Edited segment color
     modelDisplayNode.BackfaceCullingOff()
     if slicer.app.majorVersion >= 5 or (slicer.app.majorVersion == 4 and slicer.app.minorVersion >= 11):
       modelDisplayNode.Visibility2DOn()
